@@ -9,6 +9,7 @@
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
 
+from gluon.sqlhtml import SQLTABLE
 from gluon.tools import Crud
 import json
 
@@ -24,7 +25,8 @@ def index():
     rows = db(db.iiit_asset).select()
     users = db(db.iiit_user).select()
     registry = db(db.iiit_asset_registry).select()
-    return dict(message=T('Hello World'), rows=rows, users=users, registry=registry)
+    return dict(rows=rows, users=users, registry=registry)    
+
 
 
 def crud():
@@ -36,11 +38,15 @@ def crud():
 
     form=None
     records = None
+
     if(len(request.args) > 0 and request.args[0] == "search"):
         (form,records) = crud()
     else:
         form = crud()
     
+    print form
+    print records.__class__
+
     # print json.dumps(records)
     return dict(form=form, records=records, args=request.args)
 

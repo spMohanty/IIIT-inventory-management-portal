@@ -1,5 +1,5 @@
 {{extend 'layout.html'}}
-<a class="btn btn-default" id="create">create</a>
+<a class="btn btn-primary" id="create">create</a>
 <hr class="divider">
 <div style="display:none" id="controller"></div>
 <div style="display:none" id="database"></div>
@@ -31,6 +31,11 @@ $(document).ready(function(d){
 
     // Check all checkboxes
     checkboxes.prop( 'checked', true );
+    
+        if($("#records table").html()==""){
+            $("form input[type='submit']").trigger('click')
+        }
+
     }
     //Loop through all table rows and add/update buttons
     var th_count = 0;
@@ -47,7 +52,7 @@ $(document).ready(function(d){
     		if(i==0){
     			console.log(i, $(this).html());
     			//Found ID
-    			$(this).parent().prepend('<td><a href="/inventory/default/crud/update/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-default">Edit</a></td>'+'<td><a href="/inventory/default/crud/delete/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-default">Delete</a></td>')
+    			$(this).parent().prepend('<td><a href="/inventory/default/crud/update/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-primary">Edit</a></td>'+'<td><a href="/inventory/default/crud/delete/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-danger">Delete</a></td>')
     			// $(this).prepend()
     		}
     	})
