@@ -1,7 +1,6 @@
 {{extend 'layout.html'}}
 <a class="btn btn-default" id="create">create</a>
-
-<br/>
+<hr class="divider">
 <div style="display:none" id="controller"></div>
 <div style="display:none" id="database"></div>
 <script type="text/javascript">
@@ -22,25 +21,39 @@ $(document).ready(function(d){
 		$(this).html($(this).html().split(".")[1]);
 	});
 
-	//Check all checkboxes
-	var checkboxes = $( ':checkbox' );
+
+
+    if($("#controller").html()=="create" || $("#controller").html()=="update"){
+        $("#records").html("");
+    }else{
+    //Check all checkboxes
+    var checkboxes = $( ':checkbox' );
 
     // Check all checkboxes
     checkboxes.prop( 'checked', true );
-
+    }
     //Loop through all table rows and add/update buttons
+    var th_count = 0;
+    $("th").each(function(){
+        if(th_count==0){
+            $(this).parent().prepend("<th></th><th></th>")
+        }
+        console.log($(this));
+        th_count+=1;
+    });
 
-    $("#records table tbody tr").each(function(){
+    $("#records table tbody tr").each(function(i){
     	$(this).children("td").each(function(i,th){
     		if(i==0){
     			console.log(i, $(this).html());
     			//Found ID
-    			$(this).prepend('<a href="/inventory/default/crud/update/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-default">Edit</a>')
-    			$(this).prepend('<a style="margin-right:10px", class="btn btn-default">Delete</a>')
+    			$(this).parent().prepend('<td><a href="/inventory/default/crud/update/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-default">Edit</a></td>'+'<td><a href="/inventory/default/crud/delete/'+$("#database").html()+'/'+$(this).html()+'" style="margin-right:10px", class="btn btn-default">Delete</a></td>')
+    			// $(this).prepend()
     		}
     	})
     })
 
 })
+$("#create").attr("href", "/inventory/default/crud/create/"+$("#database").html());
 
 </script>

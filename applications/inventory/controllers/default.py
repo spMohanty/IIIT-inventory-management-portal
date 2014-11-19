@@ -21,7 +21,10 @@ def index():
     return auth.wiki()
     """
     response.flash = T("Welcome to IIIT-H Inventory Management Portal !")
-    return dict(message=T('Hello World'))
+    rows = db(db.iiit_asset).select()
+    users = db(db.iiit_user).select()
+    registry = db(db.iiit_asset_registry).select()
+    return dict(message=T('Hello World'), rows=rows, users=users, registry=registry)
 
 
 def crud():
@@ -29,10 +32,11 @@ def crud():
     crud.settings.update_deletable = True
     crud.settings.showid = False
     crud.settings.keepvalues = False
+    crud.settings.delete_next = URL('index')
 
     form=None
     records = None
-    if(request.args[0] == "search"):
+    if(len(request.args) > 0 and request.args[0] == "search"):
         (form,records) = crud()
     else:
         form = crud()

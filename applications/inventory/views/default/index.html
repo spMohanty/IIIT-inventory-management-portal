@@ -2,3 +2,25 @@
 <span>
     Welcome to IIIT Inventory Registry
 </span>
+<h4>Assets </h4>
+<p>
+{{=rows}}
+</p>
+<h4>Asset Registry </h4>
+<p>
+{{=registry}}
+</p>
+<h4>Users </h4>
+<p>
+{{=users}}
+</p>
+
+<script>
+$(document).ready(function(d){
+    //Clean up table headers
+    $("th").each(function(i,th){
+        $(this).html($(this).html().split(".")[1]);
+    });
+});
+
+</script>
